@@ -1,16 +1,14 @@
 [project]
-name = "aiphotoculler"
+name = "photo-cull"
 version = "0.1.0"
-description = "Add your description here"
+description = "A cli photo culling application with llm and decision model escalation."
 readme = "README.md"
-authors = [
-    { name = "Chase Kelly", email = "188378569+EquilOne@users.noreply.github.com" }
-]
 requires-python = ">=3.13"
+authors = [{ name = "Chase Kelly", email = "188378569+EquilOne@users.noreply.github.com" }]
 dependencies = []
 
 [project.scripts]
-aiphotoculler = "aiphotoculler:main"
+photo-cull = "photo_cull:main"
 
 [build-system]
 requires = ["uv_build>=0.12.19,<0.13.0"]
