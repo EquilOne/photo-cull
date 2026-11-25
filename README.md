@@ -67,13 +67,37 @@ Each scan shells out to exiftool once as a batch JSON call (`-j -n -config "" -m
 
 ## Development
 
+Requirements: Python 3.13 only (`.python-version` is pinned) with [uv](https://docs.astral.sh/uv/), plus exiftool (see [Getting Started](#getting-started)). `uv.lock` is committed — use `uv sync`, not plain `pip install`:
+
 ```bash
-uv run ruff check     # lint
-uv run ruff format    # format
-uv run ty check       # type check
+uv sync                      # creates .venv and installs the project + dev group
+uv run photo-cull <shoot-dir> --dry-run
 ```
 
-No tests, CI, or pre-commit yet. `uv.lock` is committed — use `uv sync` rather than plain `pip install`.
+Linting and type checking (dev group):
+
+```bash
+uv run ruff check            # lint
+uv run ruff format           # format
+uv run ty check              # type check
+```
+
+Ruff uses `select = ["E", "F", "I", "UP", "B", "SIM"]` with a line length of 88. Runtime `dependencies` must stay empty — dev tooling lives in `[dependency-groups] dev` only.
+
+No tests, CI, or pre-commit exist yet. There is an empty `tests/` directory, but pytest is not set up — a contributor wanting to test would need to add it to `pyproject.toml` first.
+
+`ty` is pre-1.0 and pinned (`>=0.0.109`) and ships breaking config changes often. Upgrade it deliberately with `uv lock --upgrade-package ty` — never a blanket `uv lock --upgrade`.
+
+Project layout (`src/photo_cull/`):
+
+| Module | Purpose |
+| --- | --- |
+| `exiftool.py` | Binary wrapper — the only module that shells out |
+| `ingest.py` | Manifest building, `ManifestEntry` dataclass |
+| `cli.py` | Argparse and `main()` |
+| `constants.py` | Extension lists and `file_type` derivation |
+
+Note for contributors: the console script maps `photo-cull = "photo_cull:main"`, and `__init__.py` re-exports `main` from `.cli` (its `__all__` satisfies ruff F401). Never point the script at `photo_cull.cli:main`.
 
 ## License
 
