@@ -17,4 +17,4 @@ No build, lint, test, or typecheck commands are configured anywhere — do not i
 - uv-managed project (backend `uv_build`), **Python 3.13 only** (`.python-version` pinned; `requires-python >=3.13`).
 - Src layout: code lives in `src/photo_cull/`.
 - **Entrypoint gotcha:** the console script maps `photo-cull = "photo_cull:main"` — `main()` must be importable from the package root (`__init__.py`), **not** `photo_cull.cli:main`. If you create `cli.py`, expose `main` from `__init__.py`.
-- No CI, pre-commit, lockfile, or dev tooling exists yet.
+- No CI, pre-commit, or dev tooling exists yet. `uv.lock` is committed.
