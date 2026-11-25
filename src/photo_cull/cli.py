@@ -11,7 +11,7 @@ from .ingest import build_manifest
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="photo-cull",
-        description="A cli photo culling application with llm and decision model escalation.",
+        description="A cli photo culling app with llm and decision model escalation.",
     )
     parser.add_argument("-n", "--dry-run", action="store_true", help="Preview output")
     parser.add_argument("src_path", help="Directory containing source images")
@@ -29,7 +29,7 @@ def build_parser() -> argparse.ArgumentParser:
 def find_image_paths(src_path) -> list[str]:
     img_types: list = IMG_FILE_TYPES
     image_paths: list[str] = []
-    for path, dirs, files in Path.walk(Path.absolute(src_path)):
+    for path, _dirs, files in Path.walk(Path.absolute(src_path)):
         for file in files:
             if Path(file).suffix.lower() in img_types:
                 image_paths.append(str((path / file).absolute()))
@@ -48,6 +48,6 @@ def main():
         manifest = build_manifest(candidates)
     except ExiftoolNotFound as exc:
         print(str(exc), file=sys.stderr)
-        raise SystemExit(1)
+        sys.exit(1)
 
     print(f"{len(manifest)} photos")

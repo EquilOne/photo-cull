@@ -36,7 +36,8 @@ IMG_FILE_TYPES = [
     ".jxl",
 ]
 
-# Classification sets used to derive file_type for the manifest (IMG_FILE_TYPES drives the scan).
+# Classification sets used to derive file_type for the manifest
+# (IMG_FILE_TYPES drives the scan).
 RAW_EXTENSIONS = {
     ".arw",
     ".cr2",
