@@ -35,3 +35,19 @@ IMG_FILE_TYPES = [
     ".tga",
     ".jxl",
 ]
+
+# Classification sets used to derive file_type for the manifest (IMG_FILE_TYPES drives the scan).
+RAW_EXTENSIONS = {
+    ".arw",
+    ".cr2",
+    ".cr3",
+    ".nef",
+    ".orf",
+    ".rw2",
+    ".dng",
+    ".raf",
+    ".srw",
+    ".pef",
+    ".araw",
+}
+JPEG_EXTENSIONS = {".jpg", ".jpeg", ".jpe", ".jfif"}
