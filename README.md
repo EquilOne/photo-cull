@@ -23,10 +23,10 @@ Install and run:
 git clone git@github.com:EquilOne/photo-cull.git
 cd PhotoCull
 uv sync                              # creates .venv and installs the project
-uv run photo-cull <shoot-dir> --dry-run   # prints the photo count, e.g. "137 photos"
+uv run photo-cull <shoot-dir> --dry-run   # prints the photo count and a folder-structure summary
 ```
 
-That's the full working state today: a fresh clone with Python 3.13, uv, and exiftool reaches `--dry-run` without any extra steps.
+That's the full working state today: ingest with its `--dry-run` summary is the only stage — a fresh clone with Python 3.13, uv, and exiftool reaches it without any extra steps.
 
 ## Usage
 
@@ -36,7 +36,8 @@ uv run photo-cull <shoot-dir> [flags]
 
 | Flag | Description |
 | --- | --- |
-| `-n` / `--dry-run` | Preview the photo count (currently the only output — wiring this flag to skip work is still pending) |
+| `-n` / `--dry-run` | Print the total photo count plus a folder-structure summary: one line per directory (tree-indented) with its image count and capture date, `earliest → latest` date range, `(+N undated)` for files missing EXIF dates, or `no dates` when a directory has none |
+| `-V` / `--verbose` | Print the full manifest, one entry per photo (file type, capture time, exposure, ISO, aperture) |
 | `-T` / `--threshold` | Scoring threshold (float, default `0.75`) — kept for the not-yet-implemented scoring stage |
 | `-x` / `--exiftool` | Path to the exiftool binary, overriding automatic detection |
 
