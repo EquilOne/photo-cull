@@ -1,5 +1,4 @@
 import argparse
-import os
 from pathlib import Path
 
 from .constants import IMG_FILE_TYPES
@@ -11,9 +10,7 @@ def build_parser() -> argparse.ArgumentParser:
         description="A cli photo culling application with llm and decision model escalation.",
     )
     parser.add_argument("-n", "--dry-run", action="store_true", help="Preview output")
-    parser.add_argument(
-        "src_path", default=Path.cwd(), help="Directory containing source images"
-    )
+    parser.add_argument("src_path", help="Directory containing source images")
     parser.add_argument(
         "-T", "--threshold", type=float, default=0.75, help="Minimum score to keep"
     )
@@ -25,8 +22,8 @@ def find_image_paths(src_path) -> list[str]:
     image_paths: list[str] = []
     for path, dirs, files in Path.walk(Path.absolute(src_path)):
         for file in files:
-            if Path(file).suffix in img_types:
-                image_paths.append(os.path.abspath(file))
+            if Path(file).suffix.lower() in img_types:
+                image_paths.append(str((path / file).absolute()))
     return image_paths
 
 
