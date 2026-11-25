@@ -32,6 +32,7 @@ EXIFTOOL_TAGS = [
     "-ISO",
     "-FNumber",
     "-ApertureValue",
+    "-SubSecTimeOriginal",
 ]
 
 

@@ -5,7 +5,7 @@ from pathlib import Path
 
 from .constants import IMG_FILE_TYPES
 from .exiftool import ExiftoolNotFound
-from .ingest import build_manifest
+from .ingest import build_manifest, directory_summary
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -22,6 +22,9 @@ def build_parser() -> argparse.ArgumentParser:
         "-x",
         "--exiftool",
         help="Path to the exiftool binary (overrides $PHOTO_CULL_EXIFTOOL)",
+    )
+    parser.add_argument(
+        "-V", "--verbose", help="Prints the full manifest.", action="store_true"
     )
     return parser
 
@@ -46,8 +49,22 @@ def main():
 
     try:
         manifest = build_manifest(candidates)
+        if args.verbose:
+            for item in manifest:
+                print(
+                    f"Name: {Path(item.path).name}\n"
+                    f"File type: {item.file_type}\n"
+                    f"Capture time: {item.capture_time}\n"
+                    f"Exposure: {item.exposure}\n"
+                    f"ISO: {item.iso}\n"
+                    f"Aperature: {item.aperture}"
+                )
+                print(f"Scorable: {item.is_scorable}")
+        if args.dry_run:
+            print(f"Manifest contains {len(manifest)} photos")
+            for line in directory_summary(manifest, src_dir):
+                print(line)
+
     except ExiftoolNotFound as exc:
         print(str(exc), file=sys.stderr)
         sys.exit(1)
-
-    print(f"{len(manifest)} photos")
