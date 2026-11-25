@@ -231,3 +231,6 @@ wheels/
 
 # Virtual environments
 .venv
+
+# Test files
+test_shoots/
